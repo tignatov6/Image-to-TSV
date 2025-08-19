@@ -1,0 +1,35 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+env/
+venv/
+ENV/
+venv.bak/
+.venv/
+
+# Conda
+.conda/
+
+# Данные и модели (обычно они слишком большие для Git)
+/data/raw/
+/data/processed/
+/models/
+*.pt
+*.pth
+*.bin
+*.onnx
+
+# IDE/Редакторы
+.idea/
+.vscode/
+*.swp
+
+# Jupyter Notebook
+.ipynb_checkpoints/
+
+# Логи и временные файлы
+*.log
+*.tmp

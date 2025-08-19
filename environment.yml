@@ -1,0 +1,71 @@
+# environment.yml
+name: image-to-tsv
+channels:
+  - pytorch
+  - nvidia # Для CUDA
+  - conda-forge
+  - defaults
+dependencies:
+  - python=3.10
+  - pip
+  
+  # --- База PyTorch (для NVIDIA CUDA) ---
+  # Убедитесь, что версия CUDA соответствует вашему драйверу
+  - pytorch
+  - torchvision
+  - torchaudio
+  - pytorch-cuda=11.8 # Пример для CUDA 11.8
+
+  # --- Основные ML/DL библиотеки ---
+  - pip:
+    - transformers # Версия, совместимая с Donut
+    - accelerate
+    - peft # Для LoRA
+    - sentencepiece
+    - timm # Зависимость для энкодеров в transformers
+    - einops
+    - hf_xet
+
+    # --- Обработка данных и изображений ---
+    - pillow
+    - opencv-python-headless
+    - pandas
+    - openpyxl # Для работы с .xls/.xlsx
+    - augraphy # Для аугментации
+
+    # --- Инструменты для инференса ---
+    # onnxruntime-gpu для NVIDIA, onnxruntime-directml для AMD
+    - onnx
+    - onnxruntime-gpu 
+
+    # --- Вспомогательные утилиты ---
+    - tqdm # Прогресс-бары
+    - python-dotenv # Управление переменными окружения
+    - jupyter # Для работы в notebooks
+    - label-studio-sdk # Опционально, для интеграции с Label Studio
+
+# --- ИНСТРУКЦИЯ ПО УСТАНОВКЕ ---
+#
+# 1. Установите Conda (Miniconda или Anaconda).
+#
+# 2. Создайте среду из этого файла:
+#    conda env create -f environment.yml
+#
+# 3. Активируйте среду:
+#    conda activate image-to-tsv
+#
+# --- ДЛЯ AMD GPU (Windows/Linux с ROCm) ---
+#
+# Если у вас карта AMD, закомментируйте блок PyTorch для NVIDIA выше (#)
+# и установите PyTorch для вашей системы вручную после создания среды.
+#
+# Пример для Windows (DirectML):
+# 1. Создайте среду с закомментированным блоком PyTorch.
+# 2. Активируйте ее: conda activate image-to-tsv
+# 3. Установите PyTorch с поддержкой DirectML:
+#    pip install torch-directml
+# 4. Установите onnxruntime для DirectML:
+#    pip install onnxruntime-directml
+#
+# Пример для Linux (ROCm):
+# Следуйте официальным инструкциям на сайте PyTorch для установки под ROCm.
