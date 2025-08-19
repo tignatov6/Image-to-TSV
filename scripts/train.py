@@ -1,5 +1,4 @@
 import torch
-import torch_directml
 from PIL import Image
 from transformers import VisionEncoderDecoderModel, DonutProcessor
 from peft import LoraConfig, get_peft_model
@@ -15,7 +14,7 @@ OUTPUT_DIR = "models/image-to-tsv-v1"
 PRETRAINED_MODEL_NAME = "naver-clova-ix/donut-base"
 
 # Параметры обучения (для одного примера много не нужно)
-NUM_TRAIN_EPOCHS = 20  # Прогоним один пример 20 раз, чтобы модель его "запомнила"
+NUM_TRAIN_EPOCHS = 5000
 LEARNING_RATE = 3e-5
 
 
@@ -34,9 +33,11 @@ def train_on_single_example():
     # --- Умный выбор устройства (GPU/CPU) ---
     if torch.cuda.is_available():
         device = "cuda"
-    elif torch_directml.is_available(): # Проверяем наличие DirectML
-        device = torch_directml.device()
     else:
+      try:
+        import torch_directml
+        device = torch_directml.device()
+      except:
         device = "cpu"
 
     print(f"Используемое устройство: {device}")
